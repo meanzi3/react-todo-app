@@ -3,11 +3,11 @@ import "./App.css";
 import Lists from "./components/Lists";
 import Form from "./components/Form";
 
+const initialTodoData = localStorage.getItem("todoData")
+  ? JSON.parse(localStorage.getItem("todoData"))
+  : [];
 export default function App() {
-  const [todoData, setTodoData] = useState([
-    { id: 1, title: "밥 먹기", completed: false },
-    { id: 2, title: "공부하기", completed: false },
-  ]);
+  const [todoData, setTodoData] = useState(initialTodoData);
   const [value, setValue] = useState("");
 
   // X 버튼 클릭 이벤트 함수
@@ -15,6 +15,7 @@ export default function App() {
     (id) => {
       let nowTodoData = todoData.filter((data) => data.id !== id);
       setTodoData(nowTodoData);
+      localStorage.setItem("todoData", JSON.stringify(nowTodoData));
     },
     [todoData]
   );
@@ -33,11 +34,13 @@ export default function App() {
 
     // 추가하기, input 값 초기화
     setTodoData((prev) => [...prev, newTodo]);
+    localStorage.setItem("todoData", JSON.stringify([...todoData, newTodo]));
     setValue("");
   };
 
   const handleRemoveClick = () => {
     setTodoData([]);
+    localStorage.setItem("todoData", JSON.stringify([]));
   };
 
   return (
