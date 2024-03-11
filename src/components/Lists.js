@@ -2,7 +2,7 @@ import React from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import List from "./List";
 
-export default function Lists({ todoData, setTodoData }) {
+const Lists = React.memo(({ todoData, setTodoData }) => {
   const handleEnd = (result) => {
     // result 매개변수에는 soure 항목 및 대상 위치와 같은 드래그 이벤트에 대한 정보가 포함됨
     // 목적지가 없으면 (이벤트 취소) 해당 함수를 종료
@@ -19,7 +19,6 @@ export default function Lists({ todoData, setTodoData }) {
     newTodoData.splice(result.destination.index, 0, redoredItem);
     setTodoData(newTodoData);
   };
-
   return (
     <div>
       <DragDropContext onDragEnd={handleEnd}>
@@ -53,4 +52,6 @@ export default function Lists({ todoData, setTodoData }) {
       </DragDropContext>
     </div>
   );
-}
+});
+
+export default Lists;
