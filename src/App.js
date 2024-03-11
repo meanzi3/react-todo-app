@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import "./App.css";
 import Lists from "./components/Lists";
 import Form from "./components/Form";
@@ -9,6 +9,15 @@ export default function App() {
     { id: 2, title: "공부하기", completed: false },
   ]);
   const [value, setValue] = useState("");
+
+  // X 버튼 클릭 이벤트 함수
+  const handleClick = useCallback(
+    (id) => {
+      let nowTodoData = todoData.filter((data) => data.id !== id);
+      setTodoData(nowTodoData);
+    },
+    [todoData]
+  );
 
   // form submit 이벤트 함수
   const handleSubmit = (e) => {
@@ -33,7 +42,11 @@ export default function App() {
         <div className="flex justify-between mb-3">
           <h1>Todo List</h1>
         </div>
-        <Lists todoData={todoData} setTodoData={setTodoData} />
+        <Lists
+          handleClick={handleClick}
+          todoData={todoData}
+          setTodoData={setTodoData}
+        />
         <Form handleSubmit={handleSubmit} value={value} setValue={setValue} />
       </div>
     </div>

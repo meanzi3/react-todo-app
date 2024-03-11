@@ -1,12 +1,16 @@
 import React from "react";
 
 const List = React.memo(
-  ({ id, title, completed, todoData, setTodoData, provided, snapshot }) => {
-    // X 버튼 클릭 이벤트 함수
-    const handleClick = (id) => {
-      let nowTodoData = todoData.filter((data) => data.id !== id);
-      setTodoData(nowTodoData);
-    };
+  ({
+    id,
+    title,
+    completed,
+    todoData,
+    setTodoData,
+    provided,
+    snapshot,
+    handleClick,
+  }) => {
     // input checkbox change 이밴트 함수
     const handleCompleteChange = (id) => {
       let nowTodoData = todoData.map((data) => {
