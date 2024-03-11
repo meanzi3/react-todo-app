@@ -4,7 +4,10 @@ import Lists from "./components/Lists";
 import Form from "./components/Form";
 
 export default function App() {
-  const [todoData, setTodoData] = useState([]);
+  const [todoData, setTodoData] = useState([
+    { id: 1, title: "밥 먹기", completed: false },
+    { id: 2, title: "공부하기", completed: false },
+  ]);
   const [value, setValue] = useState("");
 
   // form submit 이벤트 함수
