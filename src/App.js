@@ -1,37 +1,11 @@
 import React, { useState } from "react";
 import "./App.css";
+import Lists from "./components/Lists";
+import Form from "./components/Form";
 
 export default function App() {
   const [todoData, setTodoData] = useState([]);
   const [value, setValue] = useState("");
-
-  const btnStyle = {
-    color: "#fff",
-    border: "none",
-    padding: "5px 9px",
-    borderRadius: "50%",
-    cursor: "pointer",
-    float: "right",
-  };
-
-  const getStyle = (completed) => {
-    return {
-      padding: "10px",
-      borderBottom: "1px #ccc dotted",
-      textDecoration: completed ? "line-through" : "none",
-    };
-  };
-
-  // X 버튼 클릭 이벤트 함수
-  const handleClick = (id) => {
-    let nowTodoData = todoData.filter((data) => data.id !== id);
-    setTodoData(nowTodoData);
-  };
-
-  // input 값 변경 이벤트 함수
-  const handleChage = (e) => {
-    setValue(e.target.value);
-  };
 
   // form submit 이벤트 함수
   const handleSubmit = (e) => {
@@ -50,52 +24,14 @@ export default function App() {
     setValue("");
   };
 
-  // input checkbox change 이밴트 함수
-  const handleCompleteChange = (id) => {
-    let nowTodoData = todoData.map((data) => {
-      if (data.id === id) {
-        data.completed = !data.completed;
-      }
-      return data;
-    });
-    setTodoData(nowTodoData);
-  };
-
   return (
-    <div className="container">
-      <div className="todoBlock">
-        <div className="title">
+    <div className="flex items-center justify-center w-screen h-screen bg-blue-100">
+      <div className="w-full p-6 m-4 bg-white rounded shadow md:w-3/4 md:max-w-lg lg:w-3/4 lg:max-w-lg">
+        <div className="flex justify-between mb-3">
           <h1>Todo List</h1>
         </div>
-        {todoData.map((data) => (
-          <div style={getStyle(data.completed)} key={data.id}>
-            <input
-              type="checkBox"
-              onChange={() => handleCompleteChange(data.id)}
-              defaultChecked={data.completed}
-            />
-            {data.title}
-            <button style={btnStyle} onClick={() => handleClick(data.id)}>
-              X
-            </button>
-          </div>
-        ))}
-        <form style={{ display: "flex" }} onSubmit={handleSubmit}>
-          <input
-            type="text"
-            name="value"
-            style={{ flex: "10", padding: "5px" }}
-            placeholder="해야 할 일을 입력하세요."
-            value={value}
-            onChange={handleChage}
-          />
-          <input
-            type="submit"
-            value="입력"
-            className="btn"
-            style={{ flex: "1" }}
-          />
-        </form>
+        <Lists todoData={todoData} setTodoData={setTodoData} />
+        <Form handleSubmit={handleSubmit} value={value} setValue={setValue} />
       </div>
     </div>
   );
